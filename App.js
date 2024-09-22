@@ -1,44 +1,31 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Text,
-  Alert,
-} from 'react-native';
-import HomeScreen from './src/HomeScreen';
-import ProfileScreen from './src/ProfileScreen';
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React from 'react'
+import Home from './src/views/Home'
+import Levels from './src/views/Levels'
 
-const Separator = () => <View style={styles.separator} />;
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 const App = () => (
-  <NavigationContainer>
+  <NavigationContainer >
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
-        options={{ title: 'Welcome' }}
+        component={Home}
+        options={{ headerShown: false }}
+
       />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Levels" component={Levels}
+        options={{
+          title: 'Levels',
+          headerStyle: {
+            backgroundColor: '#424242',
+          },
+          headerTintColor: '#fff',
+        }}      />
     </Stack.Navigator>
   </NavigationContainer>
+)
 
-);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: 16,
-  },
-  title: {
-    textAlign: 'center',
-    marginVertical: 8,
-  },
-});
-
-export default App;
+export default App
