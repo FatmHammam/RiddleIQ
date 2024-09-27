@@ -4,6 +4,7 @@ import React from 'react'
 import Home from './src/views/Home'
 import Levels from './src/views/Levels'
 import Settings from './src/views/Settings'
+import Level from './src/views/Level'
 
 const Stack = createNativeStackNavigator()
 
@@ -19,6 +20,15 @@ const App = () => (
       <Stack.Screen name="Levels" component={Levels}
         options={{
           title: 'Levels',
+          headerStyle: {
+            backgroundColor: '#424242',
+          },
+          headerTintColor: '#fff',
+        }}
+        />
+      <Stack.Screen name="Level" component={Level}
+        options={{
+          title: 'Level 1',
           headerStyle: {
             backgroundColor: '#424242',
           },

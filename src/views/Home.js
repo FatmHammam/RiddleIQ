@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
       <View>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.navigate('Levels')}
+          onPress={() => navigation.navigate('Level')}
         >
           <Icon name="play-arrow" size={24} color="#F5F5F5" style={styles.icon}/>
           <Text style={styles.buttonText}>Start</Text>
