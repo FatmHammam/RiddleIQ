@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import Home from './src/views/Home'
 import Levels from './src/views/Levels'
+import Settings from './src/views/Settings'
 
 const Stack = createNativeStackNavigator()
 
@@ -22,7 +23,14 @@ const App = () => (
             backgroundColor: '#424242',
           },
           headerTintColor: '#fff',
-        }}      />
+        }}
+        />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{ headerShown: false }}
+
+      />
     </Stack.Navigator>
   </NavigationContainer>
 )
