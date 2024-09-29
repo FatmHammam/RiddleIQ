@@ -13,18 +13,18 @@ const Level = () => {
   const [answer, setAnswer] = useState('')
   const [isEditing, setIsEditing] = useState(false)
 
-
   const handleButtonPress = (number) => {
     setAnswer((prevAnswer) => prevAnswer + number)
+    setIsEditing(true) // Keeps editing state as true when number is pressed
   }
+
   const handleInputPress = () => {
-    setIsEditing(true)
+    setIsEditing(true) // Set editing state to true when input is clicked
   }
 
   const handleBlur = () => {
-    // Reset editing state and show placeholder if no answer is entered
     if (answer === '') {
-      setIsEditing(false)
+      setIsEditing(false) // Reset editing state if no answer
     }
   }
 
@@ -35,34 +35,24 @@ const Level = () => {
         style={styles.image}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your answer"
-        value={answer}
-        onChangeText={setAnswer}
-        keyboardType="numeric"
-        editable={isEditing ? true : false} // This will prevent the keyboard from appearing
-      />
-      {/*
       <TouchableOpacity
+        activeOpacity={1}
         onPress={handleInputPress}
-        onBlur={handleBlur}
-        style={styles.input}
+        style={styles.inputContainer}
       >
-        <Text style={styles.inputText}>
-          {isEditing ? answer : 'Enter your answer'}
-        </Text>
+        {/* Show placeholder only when not editing and answer is empty */}
+        {!isEditing && answer === '' ? (
+          <Text style={styles.placeholder}>Enter your answer</Text>
+        ) : (
+          <TextInput
+            style={styles.input}
+            value={answer}
+            onChangeText={setAnswer}
+            editable={false} // Disable editing to prevent keyboard
+            onBlur={handleBlur} // Call handleBlur when input loses focus
+          />
+        )}
       </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={handleInputPress}
-        onBlur={handleBlur}
-        style={styles.input}
-      >
-        <Text style={styles.inputText}>
-          {isEditing ? answer : (answer ? answer : 'Enter your answer')}
-        </Text>
-      </TouchableOpacity> */}
 
       <View style={styles.numberButtonsContainer}>
         <TouchableOpacity
@@ -72,7 +62,7 @@ const Level = () => {
           <Icon name="lightbulb-outline" size={24} color="#F5F5F5" />
         </TouchableOpacity>
 
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
           <TouchableOpacity
             key={number}
             style={styles.btn}
@@ -84,7 +74,14 @@ const Level = () => {
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => console.log('Enter pressed')}
+          onPress={() => setAnswer('')}
+        >
+          <Text style={styles.buttonText}>X</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setAnswer('')}
         >
           <Text style={styles.buttonText}>Enter</Text>
         </TouchableOpacity>
@@ -107,13 +104,22 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'contain',
   },
-  input: {
+  inputContainer: {
     width: '80%',
     height: 40,
     backgroundColor: '#F5F5F5',
     borderRadius: 5,
     justifyContent: 'center',
     paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  input: {
+    fontSize: 16,
+    color: '#000',
+  },
+  placeholder: {
+    color: '#888',
+    fontSize: 16,
   },
   numberButtonsContainer: {
     flexDirection: 'row',
@@ -138,4 +144,3 @@ const styles = StyleSheet.create({
 })
 
 export default Level
-
