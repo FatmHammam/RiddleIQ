@@ -5,6 +5,7 @@ import Home from './src/views/Home'
 import Levels from './src/views/Levels'
 import Settings from './src/views/Settings'
 import Level from './src/views/Level'
+import NextLevel from './src/views/NextLevel'
 
 const Stack = createNativeStackNavigator()
 
@@ -35,6 +36,7 @@ const App = () => (
           headerTintColor: '#fff',
         }}
         />
+      <Stack.Screen name="QuizCompleted" component={NextLevel} />
       <Stack.Screen
         name="Settings"
         component={Settings}

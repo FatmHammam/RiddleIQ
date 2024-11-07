@@ -107,7 +107,7 @@ const Home = ({navigation}) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Settings</Text>
+            <Text style={styles.modalText}>Are you sure ?</Text>
             <View style={styles.modalExitView}>
               <TouchableOpacity
                 style={styles.cancelBtn}

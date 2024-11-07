@@ -7,49 +7,72 @@ import {
   TextInput,
   Image,
 } from 'react-native'
+import { Questions } from '../assets/Questions'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-const Level = () => {
-  const [answer, setAnswer] = useState('')
+const Level = ({ navigation }) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [typedAnswer, setTypedAnswer] = useState('')
   const [isEditing, setIsEditing] = useState(false)
 
   const handleButtonPress = (number) => {
-    setAnswer((prevAnswer) => prevAnswer + number)
-    setIsEditing(true) // Keeps editing state as true when number is pressed
+    setTypedAnswer((prevAnswer) => prevAnswer + number)
+    setIsEditing(true)
   }
 
   const handleInputPress = () => {
-    setIsEditing(true) // Set editing state to true when input is clicked
+    setIsEditing(true)
   }
 
   const handleBlur = () => {
-    if (answer === '') {
-      setIsEditing(false) // Reset editing state if no answer
+    if (typedAnswer === '') {
+      setIsEditing(false)
+    }
+  }
+
+  const handleAnswerCheck = () => {
+    if (Number(typedAnswer) === Questions[currentQuestionIndex].answer) {
+      console.log('Correct Answer')
+      const nextIndex = currentQuestionIndex + 1
+
+      if (nextIndex < Questions.length) {
+        setCurrentQuestionIndex(nextIndex)
+        setTypedAnswer('')
+      } else {
+        console.log('Quiz completed!')
+        // Optionally, navigate to a completion screen or reset quiz
+        navigation.navigate('QuizCompleted')
+      }
+    } else {
+      console.log('Wrong Answer')
+      console.log('typedAnswer', typedAnswer)
     }
   }
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../assets/images/quiz.webp')}
-        style={styles.image}
-      />
-
+      {Questions[currentQuestionIndex].question ? (
+        <Text style={{ color: '#F5F5F5' }}>{Questions[currentQuestionIndex].question}</Text>
+) : (
+  <Image
+    source={Questions[currentQuestionIndex].questionSrc}
+    style={styles.image}
+  />
+)}
       <TouchableOpacity
         activeOpacity={1}
         onPress={handleInputPress}
         style={styles.inputContainer}
       >
-        {/* Show placeholder only when not editing and answer is empty */}
-        {!isEditing && answer === '' ? (
+        {!isEditing && typedAnswer === '' ? (
           <Text style={styles.placeholder}>Enter your answer</Text>
         ) : (
           <TextInput
             style={styles.input}
-            value={answer}
-            onChangeText={setAnswer}
-            editable={false} // Disable editing to prevent keyboard
-            onBlur={handleBlur} // Call handleBlur when input loses focus
+            value={typedAnswer}
+            onChangeText={() => setTypedAnswer(typedAnswer)}
+            editable={false}
+            onBlur={handleBlur}
           />
         )}
       </TouchableOpacity>
@@ -74,14 +97,14 @@ const Level = () => {
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => setAnswer('')}
+          onPress={() => setTypedAnswer('')}
         >
           <Text style={styles.buttonText}>X</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => setAnswer('')}
+          onPress={handleAnswerCheck}
         >
           <Text style={styles.buttonText}>Enter</Text>
         </TouchableOpacity>
@@ -99,11 +122,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
   },
-  image: {
-    width: 550,
-    height: 150,
-    resizeMode: 'contain',
-  },
   inputContainer: {
     width: '80%',
     height: 40,
@@ -112,6 +130,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
     marginBottom: 20,
+  },
+  image: {
+    width: 550,
+    height: 150,
+    resizeMode: 'contain',
   },
   input: {
     fontSize: 16,
