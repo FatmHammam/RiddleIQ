@@ -22,7 +22,7 @@ const Level = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [typedAnswer, setTypedAnswer] = useState('')
   const [answer, setAnswer] = useState('')
-  const [modalState, setModalState] = useState(null) // Keeps track of modal state
+  const [modalState, setModalState] = useState(null)
   const [hint, setHint] = useState('')
 
   const handleButtonPress = (number) => {
@@ -50,7 +50,7 @@ const Level = ({ navigation }) => {
     }
     setModalVisible(false)
     setTypedAnswer('')
-    setHint('') // Clear hint when moving to next question
+    setHint('')
   }
 
   const handleHint = () => {
@@ -78,6 +78,11 @@ const Level = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
+      <View style={styles.questionNo}>
+        <Text style={styles.questionNoText}>
+          {` Level ${Questions[currentQuestionIndex].questionNo}`}
+        </Text>
+      </View>
       {Questions[currentQuestionIndex].question ? (
         <Text style={styles.question}>{Questions[currentQuestionIndex].question}</Text>
       ) : (
@@ -156,7 +161,6 @@ const Level = ({ navigation }) => {
   )
 }
 
-// Separate component to handle modal content rendering
 const ModalContent = ({ modalState, hint, answer }) => {
   switch (modalState) {
     case MODAL_STATES.CORRECT:
@@ -203,7 +207,7 @@ const styles = StyleSheet.create({
   },
   question: {
     color: '#F5F5F5',
-    fontSize: 20,
+    fontSize: 24,
     textAlign: 'center',
   },
   inputContainer: {
@@ -295,6 +299,17 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 20,
     marginBottom: 20,
+    fontWeight: 'bold',
+  },
+  questionNo: {
+    backgroundColor: '#229799',
+    padding: 10,
+    borderRadius: 5,
+    alignSelf: 'flex-start',
+  },
+  questionNoText: {
+    color: '#F5F5F5',
+    fontSize: 26,
     fontWeight: 'bold',
   },
 })

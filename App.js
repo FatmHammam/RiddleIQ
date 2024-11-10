@@ -18,29 +18,17 @@ const App = () => (
 
       />
       <Stack.Screen name="Levels" component={Levels}
-        options={{
-          title: 'Levels',
-          headerStyle: {
-            backgroundColor: '#424242',
-          },
-          headerTintColor: '#fff',
-        }}
-        />
+        options={{ headerShown: false }}
+
+      />
       <Stack.Screen name="Level" component={Level}
-        options={{
-          title: 'Level 1',
-          headerStyle: {
-            backgroundColor: '#424242',
-          },
-          headerTintColor: '#fff',
-        }}
-        />
-      {/* <Stack.Screen name="QuizCompleted" component={NextLevel} /> */}
+        options={{ headerShown: false }}
+
+      />
       <Stack.Screen
         name="Settings"
         component={Settings}
         options={{ headerShown: false }}
-
       />
     </Stack.Navigator>
   </NavigationContainer>
