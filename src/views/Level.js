@@ -17,20 +17,22 @@ const MODAL_STATES = {
   HINT: 'HINT',
 }
 
-const Level = ({ navigation }) => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+const Level = ({ navigation, route }) => {
+  const { questionNo = 1 } = route.params || {}
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(questionNo - 1)
   const [modalVisible, setModalVisible] = useState(false)
   const [typedAnswer, setTypedAnswer] = useState('')
   const [answer, setAnswer] = useState('')
   const [modalState, setModalState] = useState(null)
   const [hint, setHint] = useState('')
+  const question = Questions[currentQuestionIndex] || {}
 
   const handleButtonPress = (number) => {
     setTypedAnswer((prevAnswer) => prevAnswer + number)
   }
 
   const handleAnswerCheck = () => {
-    if (Number(typedAnswer) === Questions[currentQuestionIndex].answer) {
+    if (Number(typedAnswer) === question.answer) {
       setModalState(MODAL_STATES.CORRECT)
     } else {
       setModalState(MODAL_STATES.WRONG)
@@ -54,7 +56,7 @@ const Level = ({ navigation }) => {
   }
 
   const handleHint = () => {
-    setHint(Questions[currentQuestionIndex].hint)
+    setHint(question.hint)
     setModalState(MODAL_STATES.HINT)
     setModalVisible(true)
   }
@@ -73,7 +75,7 @@ const Level = ({ navigation }) => {
 
   const handleAnswer = () => {
     setModalState(MODAL_STATES.ANSWER)
-    setAnswer(Questions[currentQuestionIndex].answer)
+    setAnswer(question.answer)
     setModalVisible(true)
   }
   return (

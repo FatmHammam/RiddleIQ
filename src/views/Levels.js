@@ -6,20 +6,19 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
+import { Questions } from '../assets/Questions'
 
 const Levels = ({navigation}) => {
-  const levels = Array.from({ length: 100 }, (_, i) => i + 1)
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.subContainer}>
-        {levels.map(level => (
+        {Questions.map((q , index)=> (
           <TouchableOpacity
-            key={level}
+            key={index}
             style={styles.btn}
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('Level', { questionNo: q.questionNo })}
           >
-            <Text style={styles.buttonText}>{level}</Text>
+            <Text style={styles.buttonText}>{q.questionNo}</Text>
           </TouchableOpacity>
           ))}
       </View>
@@ -30,7 +29,8 @@ const Levels = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#424242',
-    paddingHorizontal: 10,
+    padding: 10,
+    flex: 1,
 
   },
   subContainer: {
